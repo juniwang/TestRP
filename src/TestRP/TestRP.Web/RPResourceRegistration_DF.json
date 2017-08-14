@@ -1,0 +1,437 @@
+﻿{
+    "namespace": "Microsoft.Nginx",
+    "providerVersion": "2.0",
+    "providerType": "Internal",
+    "resourceTypes": [
+        {
+            "name": "Nginx",
+            "routingType": "Default",
+            "allowedUnauthorizedActions": [
+                "Microsoft.Nginx/register/action"
+            ],
+            "linkedOperationRules": [
+                {
+                    "linkedOperation": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove",
+                    "linkedAction": "Validate"
+                }
+            ],
+            "loggingRules": [
+                {
+                    "action": "Microsoft.Nginx/register/action",
+                    "detailLevel": "Body",
+                    "direction": "Request"
+                },
+                {
+                    "action": "Microsoft.Nginx/unregister/action",
+                    "detailLevel": "Body",
+                    "direction": "Request"
+                }
+            ],
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersions": [
+                        "2017-02-01",
+                        "2016-04-01",
+                        "2015-08-01",
+                        "2015-03-01",
+                        "2014-04-01",
+                        "2014-04-01-preview",
+                        "2014-04-01-alpha"
+                    ],
+                    "endpointUri": "https://jw-webapp-win-01.azurewebsites.net",
+                    "locations": [
+                        ""
+                    ],
+                    "timeout": "PT1M"
+                }
+            ],
+            "metadata": {
+                "microsoft.insights1": {
+                    "monitoringResourceProvider": {
+                        "version": "1.0",
+                        "metrics": {
+                            "mdsInfo": [
+                                {
+                                    "serviceIdentity": "MicrosoftCache"
+                                }
+                            ],
+                            "mdmInfo": [
+                                {
+                                    "sourceMdmAccount": "redisinsightsstage",
+                                    "sourceMdmNamespace": "ShoeBox"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "locations",
+            "routingType": "ProxyOnly",
+            "allowedUnauthorizedActions": [
+                "Microsoft.Nginx/register/action"
+            ],
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersions": [
+                        "2017-02-01",
+                        "2016-04-01",
+                        "2015-08-01",
+                        "2015-03-01",
+                        "2014-04-01",
+                        "2014-04-01-preview",
+                        "2014-04-01-alpha"
+                    ],
+                    "endpointUri": "https://jw-webapp-win-01.azurewebsites.net",
+                    "locations": [
+                        ""
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        },
+        {
+            "name": "checkNameAvailability",
+            "routingType": "ProxyOnly",
+            "allowedUnauthorizedActions": [
+                "Microsoft.Nginx/checkNameAvailability/action"
+            ],
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersions": [
+                        "2017-02-01",
+                        "2016-04-01",
+                        "2015-08-01",
+                        "2015-03-01",
+                        "2014-04-01",
+                        "2014-04-01-preview",
+                        "2014-04-01-alpha"
+                    ],
+                    "endpointUri": "https://df-rp-namecheck.cacheinfra.icbbvt.windows-int.net:10225/",
+                    "locations": [
+                        ""
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        },
+        {
+            "name": "Nginx/metricDefinitions",
+            "routingType": "ProxyOnly",
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/eastus/",
+                    "locations": [
+                        "East US", ""
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/eastus2/",
+                    "locations": [
+                        "East US 2"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/northcentralus/",
+                    "locations": [
+                        "North Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/northeurope/",
+                    "locations": [
+                        "North Europe"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/westeurope/",
+                    "locations": [
+                        "West Europe"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/brazilsouth/",
+                    "locations": [
+                        "Brazil South"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/westus/",
+                    "locations": [
+                        "West US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/centralus/",
+                    "locations": [
+                        "Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/southcentralus/",
+                    "locations": [
+                        "South Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/japaneast/",
+                    "locations": [
+                        "Japan East"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/japanwest/",
+                    "locations": [
+                        "Japan West"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/eastasia/",
+                    "locations": [
+                        "East Asia"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/southeastasia/",
+                    "locations": [
+                        "Southeast Asia"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/australiaeast/",
+                    "locations": [
+                        "Australia East"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/australiasoutheast/",
+                    "locations": [
+                        "Australia Southeast"
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        },
+        {
+            "name": "Nginx/diagnosticSettings",
+            "routingType": "ProxyOnly",
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/eastus/",
+                    "locations": [
+                        "East US", ""
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/eastus2/",
+                    "locations": [
+                        "East US 2"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/northcentralus/",
+                    "locations": [
+                        "North Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/northeurope/",
+                    "locations": [
+                        "North Europe"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/westeurope/",
+                    "locations": [
+                        "West Europe"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/brazilsouth/",
+                    "locations": [
+                        "Brazil South"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/westus/",
+                    "locations": [
+                        "West US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/centralus/",
+                    "locations": [
+                        "Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/southcentralus/",
+                    "locations": [
+                        "South Central US"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/japaneast/",
+                    "locations": [
+                        "Japan East"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/japanwest/",
+                    "locations": [
+                        "Japan West"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/eastasia/",
+                    "locations": [
+                        "East Asia"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/southeastasia/",
+                    "locations": [
+                        "Southeast Asia"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/australiaeast/",
+                    "locations": [
+                        "Australia East"
+                    ],
+                    "timeout": "PT1M"
+                },
+                {
+                    "enabled": true,
+                    "apiVersion": "2014-04-01",
+                    "endpointUri": "https://centralus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/australiasoutheast/",
+                    "locations": [
+                        "Australia Southeast"
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        }
+    ],
+    "management": {
+        "incidentRoutingService": "Windows Azure Cache",
+        "incidentRoutingTeam": "Triage",
+        "incidentContactEmail": "vscjenkins@microsoft.com",
+        "resourceAccessPolicy": "NotSpecified"
+    },
+    "capabilities": [
+        {
+            "quotaId": "CSP_2015-05-01",
+            "effect": "Allow"
+        }
+    ],
+    "metadata": {
+        "microsoft.insights": {
+            "monitoringResourceProvider": {
+                "version": "1.0",
+                "metrics": {
+                    "mdsInfo": [
+                        {
+                            "serviceIdentity": "MicrosoftCache"
+                        }
+                    ],
+                    "mdmInfo": [
+                        {
+                            "sourceMdmAccount": "tbd_default",
+                            "sourceMdmNamespace": "tbd_default"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

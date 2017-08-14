@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TestRP.Common;
 
 namespace TestRP.Web
 {
@@ -18,6 +19,10 @@ namespace TestRP.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //log4Net appender
+            log4net.Config.XmlConfigurator.Configure();
+            AzureLog.Info("log4net initialized.");
         }
     }
 }

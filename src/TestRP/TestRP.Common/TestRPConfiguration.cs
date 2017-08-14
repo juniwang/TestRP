@@ -1,6 +1,6 @@
-﻿using Microsoft.Azure;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +13,13 @@ namespace TestRP.Common
         {
             get
             {
-                return  CloudConfigurationManager.GetSetting("Log4NetConnectionString");
+                return  ConfigurationManager.AppSettings["Log4NetConnectionString"];
             }
         }
 
         public static string CsmCertificatesFetchUrl {
             get {
-                return CloudConfigurationManager.GetSetting("CsmCertificatesFetchUrl");
+                return ConfigurationManager.AppSettings["CsmCertificatesFetchUrl"];
             }
         }
     }
