@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using TestRP.Common;
 using TestRP.Common.Helpers;
 using TestRP.Web.Models;
 
@@ -15,23 +16,11 @@ namespace TestRP.Web.Controllers
     {
         // This API is called by CSM even though they don't document it.
         [AcceptVerbs("GET")]
-        public virtual HttpResponseMessage Get(string locationName, string subscriptionId)
+        public virtual HttpResponseMessage Get(string subscriptionId)
         {
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-        // CSM does notify on proxy-only endpoints as well. CSM doesn't have any hook do exclude those calls.
-        // This is a dummy no-op implementation to keep CSM happy. All the real work happen in the
-        // per-location PUT calls just below. 
-        [AcceptVerbs("PUT")]
-        public virtual async Task<IHttpActionResult> Put(
-            [FromUri] string subscriptionId,
-            [FromBody] UpdateSubscriptionRequest updateRequest)
-        {
-            await Task.Yield();
-            HttpContent responseBody = JsonHelpers.ConvertToHttpContent(updateRequest);
-            return new HttpStatusResult(HttpStatusCode.OK, responseBody);
-        }
 
         // FLOW:
         // ARM(Csm) Calls us with a PUT request on a subscription
@@ -46,16 +35,10 @@ namespace TestRP.Web.Controllers
         // For delete requests, its quite similar.
         [AcceptVerbs("PUT")]
         public virtual async Task<IHttpActionResult> Put(
-            [FromUri] string locationName,
             [FromUri] string subscriptionId,
             [FromBody] UpdateSubscriptionRequest updateRequest)
         {
-            if (String.IsNullOrEmpty(locationName))
-            {
-                throw new ArgumentException("locationName");
-            }
-
-            if (String.IsNullOrEmpty(subscriptionId))
+            if (string.IsNullOrEmpty(subscriptionId))
             {
                 throw new ArgumentException("subscriptionId");
             }
@@ -70,8 +53,7 @@ namespace TestRP.Web.Controllers
 
             HttpContent responseBody = JsonHelpers.ConvertToHttpContent(updateRequest);
 
-            //Logger.Info("UpdateRequest on Subscription {0}. State={1}", subscriptionId, updateRequest.State);
-            bool enqueued = false;
+            AzureLog.Info("UpdateRequest on Subscription {0}. State={1}", subscriptionId, updateRequest.State.ToString());
             //switch (updateRequest.State)
             //{
             //    case SubscriptionState.Registered:
@@ -89,12 +71,10 @@ namespace TestRP.Web.Controllers
             //        break;
 
             //    default:
-            //        throw new HttpArgumentException("state");
+            //        throw new ArgumentException("state");
             //}
 
-            return enqueued ?
-                new HttpStatusResult(HttpStatusCode.Accepted, null) :
-                new HttpStatusResult(HttpStatusCode.OK, responseBody);
+            return new HttpStatusResult(HttpStatusCode.OK, responseBody);
         }
     }
 }

@@ -8,8 +8,10 @@ namespace TestRP.Common.Models
 {
     public class NginxResourceResponse
     {
-        public NginxResourceResponse() {
+        public NginxResourceResponse()
+        {
             tags = new Dictionary<string, string>();
+            properties = new NginxResponseProperties();
         }
 
         // something like this: "/subscriptions/{id}/resourcegroups/{resourceGroupName}/providers/Microsoft.Nginx/Nginx/{name}",
@@ -33,5 +35,15 @@ namespace TestRP.Common.Models
         // value is NULLABLE
         // CSM: Tag-names created by Azure will have a prefixes of “microsoft”, “azure”, or “windows”.  Users will not be able to create tags with one of these prefixes. 
         public IDictionary<string, string> tags { get; set; }
+
+        public NginxResponseProperties properties { get; set; }
+    }
+
+    public class NginxResponseProperties
+    {
+
+        public bool enabled { get; set; }
+
+        public string nginxVersion { get; set; }
     }
 }

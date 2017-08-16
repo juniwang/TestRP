@@ -8,6 +8,15 @@ using TestRP.Common.Models;
 
 namespace TestRP.Web.Controllers
 {
+    /// <summary>
+    /// See RPAPIv2: "Exposing Available Operations (for client discovery)"
+    /// 
+    /// Basically we need to give metadata to describe
+    /// - ALL CUD Operations
+    /// - ALL POST Operations
+    /// that act on our resources via our REST API,
+    /// so that role based security can show nice descriptions for it in the portal, powershell, etc.
+    /// </summary>
     public class ActionMetadataController : BaseApiController
     {
         [AcceptVerbs("GET")]
@@ -24,34 +33,17 @@ namespace TestRP.Web.Controllers
                     CacheProviderAction("register/action", "register provider" ,"register provider"),
                     CacheProviderAction("unregister/action", "unregister provider" , "unregister provider"),
 
-                    //RedisAction("write", Resources.OperationWriteRedis, Resources.OperationWriteRedisLong),
-                    //RedisAction("read", Resources.OperationReadRedis, Resources.OperationReadRedisLong),
-                    //RedisAction("delete", Resources.OperationDeleteRedis, Resources.OperationDeleteRedisLong),
-                    //RedisAction("listKeys/action", Resources.OperationListKeysRedis, Resources.OperationListKeysRedisLong),
-                    //RedisAction("regenerateKey/action", Resources.OperationRegenerateKeysRedis, Resources.OperationRegenerateKeysRedisLong),
-                    //RedisAction("import/action", Resources.OperationImport, Resources.OperationImportLong),
-                    //RedisAction("export/action", Resources.OperationExport, Resources.OperationExportLong),
-                    //RedisAction("forceReboot/action", Resources.OperationForceReboot, Resources.OperationForceReboot),
-                    //RedisAction("stop/action", Resources.OperationStop, Resources.OperationStop),
-                    //RedisAction("start/action", Resources.OperationStart, Resources.OperationStart),
+                    //NginxAction("write", Resources.OperationWriteRedis, Resources.OperationWriteRedisLong),
+                    //NginxAction("read", Resources.OperationReadRedis, Resources.OperationReadRedisLong),
+                    //NginxAction("delete", Resources.OperationDeleteRedis, Resources.OperationDeleteRedisLong),
+                    //NginxAction("listKeys/action", Resources.OperationListKeysRedis, Resources.OperationListKeysRedisLong),
+                    //NginxAction("regenerateKey/action", Resources.OperationRegenerateKeysRedis, Resources.OperationRegenerateKeysRedisLong),
+                    //NginxAction("import/action", Resources.OperationImport, Resources.OperationImportLong),
+                    //NginxAction("export/action", Resources.OperationExport, Resources.OperationExportLong),
+                    //NginxAction("forceReboot/action", Resources.OperationForceReboot, Resources.OperationForceReboot),
+                    //NginxAction("stop/action", Resources.OperationStop, Resources.OperationStop),
+                    //NginxAction("start/action", Resources.OperationStart, Resources.OperationStart),
 
-                    ////RedisAction("stopScript/action", Resources.OperationStopScript, Resources.OperationStopScript),
-
-                    //RedisMetricDefinitionsAction("read", Resources.OperationReadMetricDefinitionsRedis, Resources.OperationReadMetricDefinitionsRedisLong, metricDefinitions),
-
-                    //RedisUpgradeNotificationAction("read", Resources.OperationListUpgradeNotificationsRedis, Resources.OperationListUpgradeNotificationsRedisLong),
-
-                    //RedisPatchSchedulesAction("read", Resources.OperationReadPatchSchedulesRedis, Resources.OperationReadPatchSchedulesRedisLong),
-                    //RedisPatchSchedulesAction("write", Resources.OperationWritePatchSchedulesRedis, Resources.OperationWritePatchSchedulesRedisLong),
-                    //RedisPatchSchedulesAction("delete", Resources.OperationDeletePatchSchedulesRedis, Resources.OperationDeletePatchSchedulesRedisLong),
-
-                    //RedisFirewallRulesAction("read", Resources.OperationReadFirewallRulesRedis, Resources.OperationReadFirewallRulesRedisLong),
-                    //RedisFirewallRulesAction("write", Resources.OperationWriteFirewallRulesRedis, Resources.OperationWriteFirewallRulesRedisLong),
-                    //RedisFirewallRulesAction("delete", Resources.OperationDeleteFirewallRulesRedis, Resources.OperationDeleteFirewallRulesRedisLong),
-
-                    //RedisLinkedServersAction("read", Resources.OperationReadLinkedServersRedis, Resources.OperationReadLinkedServersRedisLong),
-                    //RedisLinkedServersAction("write", Resources.OperationWriteLinkedServersRedis, Resources.OperationWriteLinkedServersRedisLong),
-                    //RedisLinkedServersAction("delete", Resources.OperationDeleteLinkedServersRedis, Resources.OperationDeleteLinkedServersRedisLong),
                 }
             };
             return actions;
@@ -72,11 +64,11 @@ namespace TestRP.Web.Controllers
             };
         }
 
-        static ActionMetadata RedisAction(string actionName, string operation, string operationDescription)
+        static ActionMetadata NginxAction(string actionName, string operation, string operationDescription)
         {
             return new ActionMetadata
             {
-                name = "Microsoft.Nginx/nginx/" + actionName,
+                name = "Microsoft.Nginx/Nginx/" + actionName,
                 display = new ActionMetadataDisplay
                 {
                     provider = "Microsoft Nginx",

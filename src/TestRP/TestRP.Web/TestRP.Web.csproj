@@ -256,9 +256,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActionMetadataController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\EnumerateResourcesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NginxResourceController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\ApiVersionAttribute.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Handlers\CertificateValidatorHandler.cs" />
     <Compile Include="Handlers\DoubleSlashSubscriptionsHandler.cs" />
     <Compile Include="Handlers\HeadersAsQueryParametersHandler.cs" />
+    <Compile Include="Handlers\LogHttpHandler.cs" />
     <Compile Include="Handlers\RequiredHeadersHandler.cs" />
     <Compile Include="Handlers\XHttpMethodHandler.cs" />
     <Compile Include="Handlers\XMsClientRequestIdHandler.cs" />
@@ -311,6 +314,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="RPResourceRegistration_DF.json" />
     <None Include="Properties\PublishProfiles\jw-webapp-win-01 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

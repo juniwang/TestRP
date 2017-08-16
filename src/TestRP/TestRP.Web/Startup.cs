@@ -120,12 +120,14 @@ namespace TestRP.Web
             config.MessageHandlers.Add(new RequiredHeadersHandler());
             if (!isUnitTest)
             {
-                config.MessageHandlers.Add(new CertificateValidatorHandler(certificateValidator, certificateRetriever));
+                // TODO disable certification verification temporary
+                //config.MessageHandlers.Add(new CertificateValidatorHandler(certificateValidator, certificateRetriever));
             }
             config.MessageHandlers.Add(new DoubleSlashSubscriptionsHandler());
             config.MessageHandlers.Add(new XHttpMethodHandler());
             config.MessageHandlers.Add(new XMsClientRequestIdHandler());
             config.MessageHandlers.Add(new AcceptLanguageHeaderHandler());
+            config.MessageHandlers.Add(new LogHttpHandler());
         }
 
         private void ConfigureFormatters(HttpConfiguration config)

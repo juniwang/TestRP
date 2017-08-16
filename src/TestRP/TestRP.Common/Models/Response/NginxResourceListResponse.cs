@@ -9,7 +9,12 @@ namespace TestRP.Common.Models
 {
     public class NginxResourceListResponse
     {
-        public NginxResourceResponse[]  values { get; set; }
+        public NginxResourceListResponse()
+        {
+            values = new NginxResourceResponse[0];
+        }
+
+        public NginxResourceResponse[] values { get; set; }
 
         /// <summary>
         /// The nextLink field is expected to point to the URL the client should use to fetch the next page

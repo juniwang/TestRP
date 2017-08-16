@@ -18,7 +18,6 @@ namespace TestRP.Web.Controllers
         /// </summary>
         [AcceptVerbs("GET")]
         public virtual async Task<NginxResourceListResponse> GetAllResources(
-            [FromUri] string locationName,
             [FromUri] string subscriptionId,
             [FromUri] string resourceType,
             [FromUri] bool whereHasNotifications = false)
@@ -28,17 +27,17 @@ namespace TestRP.Web.Controllers
                 throw new ArgumentException("subscriptionId");
             }
 
-            if (string.IsNullOrWhiteSpace(locationName))
-            {
-                throw new ArgumentException("locationName");
-            }
-
-            var dummy1 = new NginxResourceResponse { id = "dummy1", location = locationName, name = "dummy1", type = resourceType };
-            var dummy2 = new NginxResourceResponse { id = "dummy1", location = locationName, name = "dummy1", type = resourceType };
-            var dummy3 = new NginxResourceResponse { id = "dummy1", location = locationName, name = "dummy1", type = resourceType };
+            //var dummy1 = new NginxResourceResponse { id = "dummy1", location = "East US", name = "dummy1", type = resourceType };
+            //var dummy2 = new NginxResourceResponse { id = "dummy1", location = "West US", name = "dummy1", type = resourceType };
+            //var dummy3 = new NginxResourceResponse { id = "dummy1", location = "East US 2", name = "dummy1", type = resourceType };
+            //return new NginxResourceListResponse
+            //{
+            //    values = new NginxResourceResponse[] { dummy1, dummy2, dummy3 }
+            //};
+            var data = NData.TryLoad();
             return new NginxResourceListResponse
             {
-                values = new NginxResourceResponse[] { dummy1, dummy2, dummy3 }
+                values = data.Resources.Select(p => p.ToResponse()).ToArray()
             };
         }
     }
