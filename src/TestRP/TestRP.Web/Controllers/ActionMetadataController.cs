@@ -29,27 +29,19 @@ namespace TestRP.Web.Controllers
             {
                 value = new ActionMetadata[]
                 {
-                    CacheProviderAction("checknameavailability/action", "check name availability", "check name availability"),
-                    CacheProviderAction("register/action", "register provider" ,"register provider"),
-                    CacheProviderAction("unregister/action", "unregister provider" , "unregister provider"),
+                    //ProviderAction("checknameavailability/action", "check name availability", "check name availability"),
+                    ProviderAction("register/action", "register provider" ,"register provider"),
+                    ProviderAction("unregister/action", "unregister provider" , "unregister provider"),
 
-                    //NginxAction("write", Resources.OperationWriteRedis, Resources.OperationWriteRedisLong),
-                    //NginxAction("read", Resources.OperationReadRedis, Resources.OperationReadRedisLong),
-                    //NginxAction("delete", Resources.OperationDeleteRedis, Resources.OperationDeleteRedisLong),
-                    //NginxAction("listKeys/action", Resources.OperationListKeysRedis, Resources.OperationListKeysRedisLong),
-                    //NginxAction("regenerateKey/action", Resources.OperationRegenerateKeysRedis, Resources.OperationRegenerateKeysRedisLong),
-                    //NginxAction("import/action", Resources.OperationImport, Resources.OperationImportLong),
-                    //NginxAction("export/action", Resources.OperationExport, Resources.OperationExportLong),
-                    //NginxAction("forceReboot/action", Resources.OperationForceReboot, Resources.OperationForceReboot),
-                    //NginxAction("stop/action", Resources.OperationStop, Resources.OperationStop),
-                    //NginxAction("start/action", Resources.OperationStart, Resources.OperationStart),
-
+                    NginxAction("write", "create Nginx" ," create Nginx"),
+                    NginxAction("read", "create Nginx" ," create Nginx"),
+                    NginxAction("delete", "create Nginx" ," create Nginx"),
                 }
             };
             return actions;
         }
 
-        static ActionMetadata CacheProviderAction(string actionName, string operation, string operationDescription)
+        static ActionMetadata ProviderAction(string actionName, string operation, string operationDescription)
         {
             return new ActionMetadata
             {

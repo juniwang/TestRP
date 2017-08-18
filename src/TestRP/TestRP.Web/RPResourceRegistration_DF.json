@@ -108,6 +108,33 @@
             ]
         },
         {
+            "name": "operations",
+            "routingType": "ProxyOnly, Tenant",
+            "allowedUnauthorizedActions": [
+                "Microsoft.Nginx/operations/read"
+            ],
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersions": [
+                        "2017-02-01",
+                        "2016-04-01",
+                        "2015-08-01",
+                        "2015-03-01",
+                        "2015-01-01",
+                        "2014-04-01",
+                        "2014-04-01-alpha",
+                        "2014-04-01-preview"
+                    ],
+                    "endpointUri": "https://jw-webapp-win-01.azurewebsites.net",
+                    "locations": [
+                        ""
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        },
+        {
             "name": "checkNameAvailability",
             "routingType": "ProxyOnly",
             "allowedUnauthorizedActions": [
@@ -142,7 +169,8 @@
                     "apiVersion": "2014-04-01",
                     "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/metricDefinitions/api/regions/eastus/",
                     "locations": [
-                        "East US", ""
+                        "East US",
+                        ""
                     ],
                     "timeout": "PT1M"
                 },
@@ -283,7 +311,8 @@
                     "apiVersion": "2014-04-01",
                     "endpointUri": "https://eastus.monitoring.dogfood.windows.azure-test.net/diagnosticSettings/api/regions/eastus/",
                     "locations": [
-                        "East US", ""
+                        "East US",
+                        ""
                     ],
                     "timeout": "PT1M"
                 },
