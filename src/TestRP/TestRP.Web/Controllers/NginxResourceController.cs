@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using TestRP.Common;
 using TestRP.Common.Helpers;
@@ -51,9 +50,9 @@ namespace TestRP.Web.Controllers
                     properties = new NResourceProperties
                     {
                         NginxVersion = request.properties.nginxVersion
-                    }
+                    },
                 };
-
+                res.CreateRandomServersForTesting();
                 data.Resources.Add(res);
             }
             else
@@ -103,8 +102,8 @@ namespace TestRP.Web.Controllers
         }
 
         [AcceptVerbs("GET")]
-        [Route("services")]
-        public virtual async Task<IHttpActionResult> Services(
+        [Route("servers")]
+        public virtual async Task<IHttpActionResult> Servers(
             [FromUri]ResourceSpec spec)
         {
             if (spec == null)

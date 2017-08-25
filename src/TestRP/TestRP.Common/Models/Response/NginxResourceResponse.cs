@@ -41,9 +41,15 @@ namespace TestRP.Common.Models
 
     public class NginxResponseProperties
     {
+        public NginxResponseProperties()
+        {
+            servers = new NginxUpstreamServerResponse[0];
+        }
 
         public bool enabled { get; set; }
 
         public string nginxVersion { get; set; }
+
+        public NginxUpstreamServerResponse[] servers { get; set; }
     }
 }

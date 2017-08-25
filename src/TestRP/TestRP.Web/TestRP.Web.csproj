@@ -261,6 +261,7 @@
     <Compile Include="Controllers\EnumerateResourcesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NginxResourceController.cs" />
+    <Compile Include="Controllers\NginxUpstreamServerController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\ApiVersionAttribute.cs" />

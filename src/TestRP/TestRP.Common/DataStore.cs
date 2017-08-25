@@ -99,12 +99,22 @@ namespace TestRP.Common
         public DateTime CreateTime { get; set; }
     }
 
+    public class NUpstreamServer
+    {
+        public string Id { get; set; }
+        public string Host { get; set; }
+        public int? Weight { get; set; }
+        public string State { get; set; }
+        public DateTime Updated { get; set; }
+    }
+
     public class NResource
     {
         public NResource()
         {
             Tags = new Dictionary<string, string>();
             properties = new NResourceProperties();
+            UpstreamServers = new NUpstreamServer[0];
         }
         public string Id
         {
@@ -124,6 +134,43 @@ namespace TestRP.Common
         public string DeploymentId { get; set; }
         public IDictionary<string, string> Tags { get; set; }
         public NResourceProperties properties { get; set; }
+        public NUpstreamServer[] UpstreamServers { get; set; }
+
+        #region to generate random fake data, for testing purpose
+        Random r = new Random();
+        string[] states = new string[] { "Running", "Starting", "Stopped", "Stopping", "Updating", "Unstable" };
+        private NUpstreamServer RandomServer()
+        {
+            string host = string.Format("{0}.{1}.{2}.{3}:{4}",
+                r.Next(1, 256), r.Next(1, 256), r.Next(1, 256), r.Next(1, 256), r.Next(80, 65536));
+            string state = states[r.Next(0, states.Length)];
+            DateTime dt = DateTime.UtcNow.AddMinutes(-1 * r.Next(1, 43200));
+            int weight = r.Next(-10, 11);
+
+            return new NUpstreamServer
+            {
+                Host = host,
+                Id = Guid.NewGuid().ToString(),
+                State = state,
+                Updated = dt,
+                Weight = weight > 0 ? weight : default(int)
+            };
+        }
+
+        private NUpstreamServer[] RandomServers()
+        {
+            List<NUpstreamServer> servers = new List<NUpstreamServer>();
+            for (int i = 0; i < r.Next(1, 7); i++)
+            {
+                servers.Add(RandomServer());
+            }
+            return servers.ToArray();
+        }
+
+        public void CreateRandomServersForTesting() {
+            UpstreamServers = RandomServers();
+        }
+        #endregion
     }
 
     public class NResourceProperties

@@ -122,6 +122,8 @@
     <Compile Include="Models\Response\ActionMetadataListResponse.cs" />
     <Compile Include="Models\Response\NginxResourceListResponse.cs" />
     <Compile Include="Models\Response\NginxResourceResponse.cs" />
+    <Compile Include="Models\Response\NginxUpstreamServerResponse.cs" />
+    <Compile Include="Models\Response\NginxUpstreamServerListResponse.cs" />
     <Compile Include="NDataExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestRPConfiguration.cs" />

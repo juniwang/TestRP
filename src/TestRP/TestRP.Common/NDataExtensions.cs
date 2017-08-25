@@ -22,7 +22,20 @@ namespace TestRP.Common
                 {
                     enabled = resource.Enabled,
                     nginxVersion = resource.properties.NginxVersion,
+                    servers = resource.UpstreamServers.Select(ToResponse).ToArray()
                 }
+            };
+        }
+
+        public static NginxUpstreamServerResponse ToResponse(this NUpstreamServer server)
+        {
+            return new NginxUpstreamServerResponse
+            {
+                host = server.Host,
+                id = server.Id,
+                state = server.State,
+                updated = server.Updated.ToString(),
+                weight = server.Weight.ToString()
             };
         }
 

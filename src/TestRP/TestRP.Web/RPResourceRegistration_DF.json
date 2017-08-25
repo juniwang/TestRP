@@ -82,6 +82,46 @@
             }
         },
         {
+            "name": "UpstreamServers",
+            "routingType": "ProxyOnly",
+            "allowedUnauthorizedActions": [
+                "Microsoft.Nginx/register/action"
+            ],
+            "endpoints": [
+                {
+                    "enabled": true,
+                    "apiVersions": [
+                        "2017-02-01",
+                        "2016-04-01",
+                        "2015-08-01",
+                        "2015-03-01",
+                        "2014-04-01",
+                        "2014-04-01-preview",
+                        "2014-04-01-alpha"
+                    ],
+                    "endpointUri": "https://jw-webapp-win-01.azurewebsites.net",
+                    "locations": [
+                        "East US",
+                        "East US 2",
+                        "North Central US",
+                        "North Europe",
+                        "West Europe",
+                        "Brazil South",
+                        "West US",
+                        "Central US",
+                        "South Central US",
+                        "Japan East",
+                        "Japan West",
+                        "East Asia",
+                        "Southeast Asia",
+                        "Australia East",
+                        "Australia Southeast"
+                    ],
+                    "timeout": "PT1M"
+                }
+            ]
+        },
+        {
             "name": "locations",
             "routingType": "ProxyOnly",
             "allowedUnauthorizedActions": [
