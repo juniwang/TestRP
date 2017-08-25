@@ -12,9 +12,11 @@ using TestRP.Web.Filters;
 namespace TestRP.Web.Controllers
 {
     [ApiVersion(ApiVersions.April2014Preview, ApiVersions.April2014Alpha, ApiVersions.April2014)]
+    [RoutePrefix("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProvider}/Nginx/{resourceName?}")]
     public class NginxResourceController : BaseApiController
     {
-        [AcceptVerbs("PUT")]
+        [HttpPut]
+        [Route]
         public virtual async Task<IHttpActionResult> Put(
             [FromUri]ResourceSpec spec,
             [FromBody]CreateNResourceRequest request)
@@ -68,6 +70,7 @@ namespace TestRP.Web.Controllers
         }
 
         [AcceptVerbs("GET")]
+        [Route]
         public virtual async Task<IHttpActionResult> Get(
             [FromUri]ResourceSpec spec)
         {
@@ -99,7 +102,29 @@ namespace TestRP.Web.Controllers
             }
         }
 
+        [AcceptVerbs("GET")]
+        [Route("services")]
+        public virtual async Task<IHttpActionResult> Services(
+            [FromUri]ResourceSpec spec)
+        {
+            if (spec == null)
+                throw new ArgumentNullException("invalid request");
+            spec.Verify();
+
+            var data = NData.TryLoad();
+            var res = data.SearchBySpec(spec);
+            if (res != null)
+            {
+                return Ok(res.ToResponse());
+            }
+            else
+            {
+                return Ok(new NginxResourceListResponse());
+            }
+        }
+
         [AcceptVerbs("DELETE")]
+        [Route]
         public virtual async Task<IHttpActionResult> Delete([FromUri]ResourceSpec spec)
         {
             if (spec == null)
@@ -120,6 +145,7 @@ namespace TestRP.Web.Controllers
         }
 
         [AcceptVerbs("OPTIONS")]
+        [Route]
         public virtual IHttpActionResult Options([FromUri]ResourceSpec spec)
         {
             var result = new HttpStatusResult(HttpStatusCode.OK, JsonHelpers.ConvertToHttpContent(string.Empty));

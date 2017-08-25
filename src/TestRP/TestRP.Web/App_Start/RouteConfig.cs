@@ -15,22 +15,6 @@ namespace TestRP.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapHttpRoute(
-               name: "actionMetadata",
-               routeTemplate: "providers/Microsoft.Nginx/operations",
-               defaults: new { controller = "ActionMetadata", action = RouteParameter.Optional });
-
-            routes.MapHttpRoute(
-              name: "nginxResource",
-              routeTemplate: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Nginx/Nginx/{resourceName}",
-              defaults: new
-              {
-                  controller = "NginxResource",
-                  action = RouteParameter.Optional,
-                  resourceProvider = "Microsoft.Nginx",
-                  resourceName = RouteParameter.Optional
-              });
-
-            routes.MapHttpRoute(
                name: "enumerateResources",
                routeTemplate: "subscriptions/{subscriptionId}/providers/Microsoft.Nginx/{resourceType}",
                defaults: new

@@ -17,9 +17,11 @@ namespace TestRP.Web.Controllers
     /// that act on our resources via our REST API,
     /// so that role based security can show nice descriptions for it in the portal, powershell, etc.
     /// </summary>
+    [RoutePrefix("providers/Microsoft.Nginx")]
     public class ActionMetadataController : BaseApiController
     {
-        [AcceptVerbs("GET")]
+        [HttpGet]
+        [Route("operations")]
         public virtual ActionMetadataListResponse Get()
         {
 
