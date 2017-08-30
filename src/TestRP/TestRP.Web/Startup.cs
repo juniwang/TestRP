@@ -88,8 +88,6 @@ namespace TestRP.Web
             {
                 HttpConfiguration config = CreateHttpConfiguration(container, isUnitTest, certificateValidator);
 
-                // Construct OWIN pipeline
-                //app.Use<OwinRequestResponseLogger>();
                 app.UseWebApi(config);
                 config.EnsureInitialized();
 

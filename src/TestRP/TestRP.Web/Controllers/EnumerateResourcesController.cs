@@ -37,7 +37,10 @@ namespace TestRP.Web.Controllers
             var data = NData.TryLoad();
             return new NginxResourceListResponse
             {
-                values = data.Resources.Select(p => p.ToResponse()).ToArray()
+                values = data.Resources
+                    .Where(p => p.SubscriptionId.Equals(subscriptionId, StringComparison.OrdinalIgnoreCase))
+                    .Select(p => p.ToResponse())
+                    .ToArray()
             };
         }
     }

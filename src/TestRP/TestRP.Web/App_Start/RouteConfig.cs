@@ -16,7 +16,7 @@ namespace TestRP.Web
 
             routes.MapHttpRoute(
                name: "enumerateResources",
-               routeTemplate: "subscriptions/{subscriptionId}/providers/Microsoft.Nginx/{resourceType}",
+               routeTemplate: "subscriptions/{subscriptionId}/providers/Microsoft.Nginx/Nginx",
                defaults: new
                {
                    controller = "EnumerateResources",
@@ -29,6 +29,12 @@ namespace TestRP.Web
                routeTemplate:
                "subscriptions/{subscriptionId}",
                defaults: new { controller = "Subscriptions", action = RouteParameter.Optional });
+
+            routes.MapHttpRoute(
+              name: "checkNameAvailability",
+              routeTemplate:
+              "subscriptions/{subscriptionId}/providers/Microsoft.Nginx/checkNameAvailability",
+              defaults: new { controller = "CheckNameAvailability", action = RouteParameter.Optional });
 
             routes.MapRoute(name: "Default",
                 url: "{controller}/{action}/{id}",
