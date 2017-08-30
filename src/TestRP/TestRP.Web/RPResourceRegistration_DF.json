@@ -192,9 +192,23 @@
                         "2014-04-01-preview",
                         "2014-04-01-alpha"
                     ],
-                    "endpointUri": "https://df-rp-namecheck.cacheinfra.icbbvt.windows-int.net:10225/",
+                    "endpointUri": "https://jw-webapp-win-01.azurewebsites.net",
                     "locations": [
-                        ""
+                        "East US",
+                        "East US 2",
+                        "North Central US",
+                        "North Europe",
+                        "West Europe",
+                        "Brazil South",
+                        "West US",
+                        "Central US",
+                        "South Central US",
+                        "Japan East",
+                        "Japan West",
+                        "East Asia",
+                        "Southeast Asia",
+                        "Australia East",
+                        "Australia Southeast"
                     ],
                     "timeout": "PT1M"
                 }
