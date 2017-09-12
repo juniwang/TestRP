@@ -341,4 +341,4 @@ ModelManifest.xml
 .fake/
 
 # subscriptions file
-src/TestRP/TestRP.Web/Sub/*.json
+src/AzNginx/AzNginx.Web/Sub/*.json
