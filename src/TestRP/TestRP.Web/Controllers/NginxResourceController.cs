@@ -1,11 +1,14 @@
-﻿using System;
+﻿using AzNginx.Models;
+using System;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TestRP.Common;
+using TestRP.Common.Exceptions;
 using TestRP.Common.Helpers;
-using TestRP.Common.Models;
+using TestRP.Provision.Core;
 using TestRP.Web.Filters;
 
 namespace TestRP.Web.Controllers
@@ -14,58 +17,40 @@ namespace TestRP.Web.Controllers
     [RoutePrefix("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProvider}/Nginx/{resourceName?}")]
     public class NginxResourceController : BaseApiController
     {
+        public DeploymentStore Store { get; set; }
+
+        public Provisioner Provisioner { get; set; }
+
+        public NginxResponseBuilder ResponseBuilder { get; set; }
+
         [HttpPut]
         [Route]
         public virtual async Task<IHttpActionResult> Put(
             [FromUri]ResourceSpec spec,
-            [FromBody]CreateNResourceRequest request)
+            [FromBody]CreateNginxResourceRequest request)
         {
+            // validate requests
             if (request == null || spec == null)
                 throw new ArgumentNullException("invalid request");
             spec.Verify();
+            ResourceNamePolicy.ValidateResourceName(spec);
 
-            spec.resourceName = spec.resourceName ?? "Nginx-" + Guid.NewGuid().ToString().Substring(0, 0);
-            var dep = new NDeployment
+            var nginx = await Store.TryGetDeployment(spec);
+            if (nginx == null)
             {
-                CreateTime = DateTime.Now,
-                DeploymentId = Guid.NewGuid().ToString(),
-                DeploymentLable = "Deployment" + DateTime.Now.ToString(),
-                SubscriptionId = spec.subscriptionId
-            };
-
-            NData data = NData.TryLoad();
-            var res = data.SearchBySpec(spec);
-            if (res == null)
-            {
-                res = new NResource
-                {
-                    DeploymentId = dep.DeploymentId,
-                    Enabled = true,
-                    Location = request.location ?? "East US",
-                    Name = spec.resourceName,
-                    ResourceGroup = spec.resourceGroupName,
-                    Tags = request.tags,
-                    Type = "Microsoft.Nginx/Nginx",
-                    SubscriptionId = spec.subscriptionId,
-                    properties = new NResourceProperties
-                    {
-                        NginxVersion = request.properties.nginxVersion
-                    },
-                };
-                res.CreateRandomServersForTesting();
-                data.Resources.Add(res);
+                // create request
+                nginx = await Provisioner.CreateResource(spec, request);
+                // todo enqueue message to deployment
+                // saving to DB
+                Store.Context.NginxResources.Add(nginx);
+                Store.Context.SaveChanges();
+                return Ok(ResponseBuilder.MakeResponse(nginx, ApiVersion));
             }
             else
             {
-                res.DeploymentId = dep.DeploymentId;
-                res.Tags = request.tags;
-                res.properties.NginxVersion = request.properties.nginxVersion;
+                // update request
+                return Ok(ResponseBuilder.MakeResponse(nginx, ApiVersion));
             }
-
-            data.Deployments.Add(dep);
-            data.SaveChanges();
-
-            return Ok(res.ToResponse());
         }
 
         [AcceptVerbs("GET")]
@@ -74,30 +59,21 @@ namespace TestRP.Web.Controllers
             [FromUri]ResourceSpec spec)
         {
             if (spec == null)
+            {
                 throw new ArgumentNullException("invalid request");
+            }
             spec.Verify();
 
-            var data = NData.TryLoad();
             if (string.IsNullOrEmpty(spec.resourceName))
             {
-                return Ok(new NginxResourceListResponse
-                {
-                    values = data.Resources.Where(
-                        p => p.SubscriptionId.Equals(spec.subscriptionId, StringComparison.OrdinalIgnoreCase)
-                        && p.ResourceGroup.Equals(spec.resourceGroupName, StringComparison.OrdinalIgnoreCase))
-                    .Select(p => p.ToResponse())
-                    .ToArray()
-                });
-            }
-
-            var res = data.SearchBySpec(spec);
-            if (res != null)
-            {
-                return Ok(res.ToResponse());
+                // Handles requests to list all resources in a resource group.
+                var nginxResources = await Store.GetAllNginxResources(spec);
+                return Ok(ResponseBuilder.MakeListResponse(nginxResources, ApiVersion));
             }
             else
             {
-                return Ok(new NginxResourceListResponse());
+                var nginx = await Provisioner.GetResource(spec, Request.Headers.IfModifiedSince);
+                return Ok(ResponseBuilder.MakeResponse(nginx, ApiVersion));
             }
         }
 
@@ -106,20 +82,8 @@ namespace TestRP.Web.Controllers
         public virtual async Task<IHttpActionResult> Servers(
             [FromUri]ResourceSpec spec)
         {
-            if (spec == null)
-                throw new ArgumentNullException("invalid request");
-            spec.Verify();
-
-            var data = NData.TryLoad();
-            var res = data.SearchBySpec(spec);
-            if (res != null)
-            {
-                return Ok(res.ToResponse());
-            }
-            else
-            {
-                return Ok(new NginxResourceListResponse());
-            }
+            // should return the Upstream servers. Might be replaced by config API?
+            return await Get(spec);
         }
 
         [AcceptVerbs("DELETE")]
@@ -130,14 +94,15 @@ namespace TestRP.Web.Controllers
                 throw new ArgumentNullException("invalid request");
             spec.Verify();
 
-            var data = NData.TryLoad();
-            var res = data.SearchBySpec(spec);
-            if (res == null)
-                return new HttpStatusResult(HttpStatusCode.NoContent);
-            else
+            try
             {
-                data.Resources.Remove(res);
-                data.SaveChanges();
+                var nginx = await Provisioner.GetResource(spec);
+                // todo should remove acr too
+                Store.Context.NginxResources.Remove(nginx);
+            }
+            catch (NginxResourceDoesntExistException)
+            {
+                return new HttpStatusResult(HttpStatusCode.NoContent);
             }
 
             return Ok();

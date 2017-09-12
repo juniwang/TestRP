@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AzNginx.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using TestRP.Common;
-using TestRP.Common.Models;
+using TestRP.Provision.Core;
 using TestRP.Web.Filters;
 
 namespace TestRP.Web.Controllers
@@ -14,6 +15,8 @@ namespace TestRP.Web.Controllers
     [RoutePrefix("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProvider}/UpstreamServers/{resourceName}/Servers")]
     public class NginxUpstreamServerController : BaseApiController
     {
+        public Provisioner Provisioner { get; set; }
+
         [AcceptVerbs("GET")]
         [Route]
         public virtual async Task<IHttpActionResult> Get(
@@ -21,18 +24,14 @@ namespace TestRP.Web.Controllers
         {
             spec.Verify();
 
-            var data = NData.TryLoad();
-            NResource resource = data.SearchBySpec(spec);
-            if (resource == null)
+            try
             {
+                var nginx = await Provisioner.GetResource(spec);
                 return Ok(new NginxUpstreamServerListResponse());
             }
-            else
+            catch
             {
-                return Ok(new NginxUpstreamServerListResponse
-                {
-                    Servers = resource.UpstreamServers.Select(p => p.ToResponse()).ToArray()
-                });
+                return Ok(new NginxUpstreamServerListResponse());
             }
         }
     }

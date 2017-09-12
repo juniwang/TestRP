@@ -1,10 +1,10 @@
-﻿using System;
+﻿using AzNginx.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using TestRP.Common;
-using TestRP.Common.Models;
 
 namespace TestRP.Web.Controllers
 {

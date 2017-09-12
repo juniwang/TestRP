@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace TestRP.Common
 {
+    [Obsolete]
     public class DataStore
     {
         private static DataStore store = new DataStore();
@@ -61,6 +62,7 @@ namespace TestRP.Common
         }
     }
 
+    [Obsolete]
     public class NData
     {
         public List<NDeployment> Deployments { get; set; }
@@ -91,6 +93,7 @@ namespace TestRP.Common
         }
     }
 
+    [Obsolete]
     public class NDeployment
     {
         public string SubscriptionId { get; set; }
@@ -99,6 +102,7 @@ namespace TestRP.Common
         public DateTime CreateTime { get; set; }
     }
 
+    [Obsolete]
     public class NUpstreamServer
     {
         public string Id { get; set; }
@@ -108,6 +112,7 @@ namespace TestRP.Common
         public DateTime Updated { get; set; }
     }
 
+    [Obsolete]
     public class NResource
     {
         public NResource()
@@ -173,6 +178,7 @@ namespace TestRP.Common
         #endregion
     }
 
+    [Obsolete]
     public class NResourceProperties
     {
         public string NginxVersion { get; set; }

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using AzNginx.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using TestRP.Common;
-using TestRP.Common.Models;
-using TestRP.Common.Policies;
 
 namespace TestRP.Web.Controllers
 {
@@ -21,7 +20,14 @@ namespace TestRP.Web.Controllers
                 throw new ArgumentException("subscriptionId");
             }
 
+            if (!"Microsoft.Nginx/Nginx".Equals(request.type, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentOutOfRangeException("Can only handle Nginx resources.");
+            }
+
             // basic validation in this RP. It should be globally unique since it's part of the dns name.
+            // Should call `/providers/Microsoft.Resources/checkresourcename` to in formal implementation.
+
             if (!ResourceNamePolicy.IsResourceNameValid(request.name))
             {
                 return CheckNameAvailabilityResponse.Invalid($"Service name {request.name} is invalid.");

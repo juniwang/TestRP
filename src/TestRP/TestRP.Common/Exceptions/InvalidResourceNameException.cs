@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TestRP.Common.Exceptions
 {
     [Serializable]
-    sealed class InvalidResourceNameException : Exception
+    public sealed class InvalidResourceNameException : Exception
     {
         public string Name { get; set; }
 

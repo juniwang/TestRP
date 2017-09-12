@@ -22,5 +22,13 @@ namespace TestRP.Common
                 return ConfigurationManager.AppSettings["CsmCertificatesFetchUrl"];
             }
         }
+
+        public static string NginxRPDbConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["NginxRPDbConnectionString"];
+            }
+        }
     }
 }

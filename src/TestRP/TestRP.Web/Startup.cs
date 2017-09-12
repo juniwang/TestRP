@@ -12,6 +12,15 @@ using System.Web.Http;
 using Autofac.Integration.WebApi;
 using System.Net.Http.Formatting;
 using TestRP.Web.Handlers;
+using TestRP.Provision.Core.Sub;
+using TestRP.Provision.Core;
+using TestRP.Web.Controllers;
+using System.Web.Mvc;
+using Autofac.Integration.Owin;
+using System.Reflection;
+using System.Web.Http.Dependencies;
+using AzNginx.DAL;
+using AzNginx.Models;
 
 [assembly: OwinStartup(typeof(TestRP.Web.Startup))]
 
@@ -46,7 +55,10 @@ namespace TestRP.Web
                     mySslCert.Thumbprint
                 }).ToArray();
             }
-            Configure(app, CreateContainer(), trustedCsmCerts);
+
+            var container = CreateContainer();
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            Configure(app, container, trustedCsmCerts);
         }
 
         public void Configure(
@@ -79,7 +91,33 @@ namespace TestRP.Web
 
         void RegisterServices(ContainerBuilder builder)
         {
+            RegisterDependencies(builder);
+            RegisterControllers(builder);
+        }
+
+        void RegisterDependencies(ContainerBuilder builder)
+        {
+            builder.Register(ctx => NginxDbContext.Create()).InstancePerLifetimeScope().PropertiesAutowired();
+            builder.RegisterType<DeploymentStore>().PropertiesAutowired();
+            builder.RegisterType<Provisioner>().PropertiesAutowired();
+            builder.RegisterType<NginxResponseBuilder>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterInstance(new CertificateRetriever()).As<ICertificateRetriever>();
+            builder.RegisterType<AzureResourceManager>().As<IAzureResourceManager>().PropertiesAutowired();
+            builder.RegisterInstance(new FileSubscriptionPoolFactory()).As<ISubscriptionPoolFactory>();
+
+            // regester SubscriptionPool
+            builder.Register<SubscriptionPool>(ctx => GetSubscriptionPool(ctx)).SingleInstance().PropertiesAutowired();
+        }
+
+        void RegisterControllers(ContainerBuilder builder)
+        {
+            builder.RegisterApiControllers(typeof(WebApiApplication).Assembly).PropertiesAutowired();
+        }
+
+        static SubscriptionPool GetSubscriptionPool(IComponentContext ctx)
+        {
+            var factory = ctx.Resolve<ISubscriptionPoolFactory>();
+            return factory.CreatePool();
         }
 
         private Action<IAppBuilder> GetAppBuilderAction(IContainer container, ICertificateValidator certificateValidator, bool isUnitTest = false)
@@ -90,7 +128,6 @@ namespace TestRP.Web
 
                 app.UseWebApi(config);
                 config.EnsureInitialized();
-
             };
 
             return act;
@@ -100,9 +137,6 @@ namespace TestRP.Web
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
-
-            //config.Services.Replace(typeof(ITraceWriter), new WebApiTracer());
-            //config.Services.Replace(typeof(IAssembliesResolver), new JustThisAssemblyResolver());
 
             var certificateRetriever = container.Resolve<ICertificateRetriever>();
             ConfigureMessageHandlers(config, isUnitTest, certificateRetriever, certificateValidator);
@@ -118,7 +152,7 @@ namespace TestRP.Web
             config.MessageHandlers.Add(new RequiredHeadersHandler());
             if (!isUnitTest)
             {
-                // TODO disable certification verification temporary
+                // TODO disable certification verification temporary. Seems like that DF env doesn't send the cert correctly.
                 //config.MessageHandlers.Add(new CertificateValidatorHandler(certificateValidator, certificateRetriever));
             }
             config.MessageHandlers.Add(new DoubleSlashSubscriptionsHandler());

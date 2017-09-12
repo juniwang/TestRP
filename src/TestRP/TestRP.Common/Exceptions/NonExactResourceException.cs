@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TestRP.Common.Exceptions
 {
     [Serializable]
-    sealed class NonExactResourceException : Exception
+    public sealed class NonExactResourceException : Exception
     {
         public string ParamName { get; set; }
 

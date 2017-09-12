@@ -33,6 +33,12 @@ namespace TestRP.Common
         {
             log.Fatal(message);
         }
+
+        public static void Fatal(string messageFormat, params string[] args)
+        {
+            log.Info(string.Format(messageFormat, args));   
+        }
+
         public static void Fatal(string message, Exception exception)
         {
             log.Fatal(message, exception);

@@ -339,3 +339,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# subscriptions file
+src/TestRP/TestRP.Web/Sub/*.json

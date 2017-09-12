@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using TestRP.Common;
@@ -24,10 +25,22 @@ namespace TestRP.Web.Handlers
             HttpRequestMessage request,
             CancellationToken token)
         {
-            var certificate = retriever.GetClientCertificate(request);
-
             try
             {
+                var certificate = retriever.GetClientCertificate(request);
+                AzureLog.Debug("Headers:" + request.Headers.ToString());
+                if (certificate == null && request.Headers.Contains("X-ARR-ClientCert"))
+                {
+                    string certHeader = request.Headers.GetValues("X-ARR-ClientCert").First();
+                    AzureLog.Debug("The certHeader is : " + certHeader);
+
+                    if (!string.IsNullOrWhiteSpace(certHeader))
+                    {
+                        byte[] clientCertBytes = Convert.FromBase64String(certHeader);
+                        certificate = new X509Certificate2(clientCertBytes);
+                    }
+                }
+
                 validator.Validate(certificate, s =>
                 {
                     AzureLog.Info("Client certificate validation failure details: {0}", s);
