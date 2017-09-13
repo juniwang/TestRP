@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Web.Http.Dependencies;
 using AzNginx.DAL;
 using AzNginx.Models;
+using AzNginx.Provision.Runner;
 
 [assembly: OwinStartup(typeof(AzNginx.Web.Startup))]
 
@@ -68,7 +69,7 @@ namespace AzNginx.Web
             ICertificateValidator csmCertificateValidator = null;
             if (!isUnitTest)
             {
-                string csmCertificatesFetchUrl = AzNginxConfiguration.CsmCertificatesFetchUrl;
+                string csmCertificatesFetchUrl = AzNginxConfiguration.Rest.CsmCertificatesFetchUrl;
                 csmCertificateValidator = new DownloadedListCertificateValidator(csmCertificatesFetchUrl, trustedCsmCerts);
             }
             var csmAction = GetAppBuilderAction(container, csmCertificateValidator, isUnitTest);
@@ -98,14 +99,15 @@ namespace AzNginx.Web
         void RegisterDependencies(ContainerBuilder builder)
         {
             builder.Register(ctx => NginxDbContext.Create()).InstancePerLifetimeScope().PropertiesAutowired();
-            builder.RegisterType<DeploymentStore>().PropertiesAutowired();
-            builder.RegisterType<Provisioner>().PropertiesAutowired();
             builder.RegisterType<NginxResponseBuilder>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterInstance(new CertificateRetriever()).As<ICertificateRetriever>();
             builder.RegisterType<AzureResourceManager>().As<IAzureResourceManager>().PropertiesAutowired();
             builder.RegisterInstance(new FileSubscriptionPoolFactory()).As<ISubscriptionPoolFactory>();
 
-            // regester SubscriptionPool
+            // register provision services
+            ProvisionService.RegisterServices(builder);
+
+            // register SubscriptionPool
             builder.Register<SubscriptionPool>(ctx => GetSubscriptionPool(ctx)).SingleInstance().PropertiesAutowired();
         }
 
@@ -128,6 +130,8 @@ namespace AzNginx.Web
 
                 app.UseWebApi(config);
                 config.EnsureInitialized();
+
+                ProvisionService.Run(container);
             };
 
             return act;

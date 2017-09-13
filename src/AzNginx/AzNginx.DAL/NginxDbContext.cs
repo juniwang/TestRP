@@ -11,7 +11,7 @@ namespace AzNginx.DAL
     public class NginxDbContext : NginxDBEntities
     {
         private NginxDbContext()
-            : base(AzNginxConfiguration.NginxRPDbConnectionString)
+            : base(AzNginxConfiguration.AzNginxDBConnectionString)
         {
 
         }

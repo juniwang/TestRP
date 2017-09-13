@@ -57,5 +57,10 @@ namespace AzNginx.Common
         {
             log.Warn(message);
         }
+
+        public static void Warn(string messageFormat, params string[] args)
+        {
+            log.Info(string.Format(messageFormat, args));
+        }
     }
 }
