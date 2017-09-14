@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Table;
 using AzNginx.Common.Exceptions;
-using AzNginx.Provision.Core.Storage.Entity;
+using AzNginx.Provision.Core.Entity;
 
 namespace AzNginx.Provision.Core.Storage.Nginx
 {

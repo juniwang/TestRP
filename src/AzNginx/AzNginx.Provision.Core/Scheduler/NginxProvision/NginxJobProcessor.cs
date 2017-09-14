@@ -7,7 +7,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using AzNginx.Provision.Core.Storage.Nginx;
 using AzNginx.Provision.Core.ServiceSettings;
 using AzNginx.Provision.Core.Storage;
-using AzNginx.Provision.Core.Storage.Entity;
+using AzNginx.Provision.Core.Entity;
 using AzNginx.Provision.Core.Handlers;
 using System.Threading;
 

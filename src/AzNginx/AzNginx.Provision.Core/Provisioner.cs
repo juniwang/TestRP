@@ -1,5 +1,7 @@
 ﻿using AzNginx.DAL;
 using AzNginx.Models;
+using AzNginx.Provision.Core.NginxProvision;
+using AzNginx.Provision.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace AzNginx.Provision.Core
     {
         public DeploymentStore Store { get; set; }
 
-        public async Task<NginxResource> CreateResource(ResourceSpec spec, CreateNginxResourceRequest req)
+        public NginxJobScheduler Scheduler { get; set; }
+
+        public async Task<NginxResource> CreateResource(ResourceSpec spec, CreateNginxResourceRequest req, OperationId operationId)
         {
-            // todo call acs and kubernetes APIs
-            return new NginxResource
+            var resource = new NginxResource
             {
                 CreatedTime = DateTime.UtcNow,
                 Location = spec.locationName,
@@ -27,12 +30,27 @@ namespace AzNginx.Provision.Core
                 UserSubscriptionId = spec.subscriptionId,
                 ResourceType = spec.resourceType,
             };
+
+            var provisionEntity = new NginxProvisionEntity
+            {
+                EntityType = EntityType.ProvisionNginx,
+                JobState = NginxProvisionState.ACRInit,
+                RowKey = Entities.GetNewRowKey().Key,
+                PartitionKey = spec.subscriptionId,
+                RetryCount = 0,
+                ScheduleTime = DateTime.UtcNow,
+                OperationId = operationId,
+            };
+            await Scheduler.StartProvision(provisionEntity);
+
+            return resource;
         }
 
         public async Task<NginxResource> GetResource(ResourceSpec spec, DateTimeOffset? ifModifiedSince = null)
         {
             var nginx = await Store.GetNginxResource(spec);
-            if (ifModifiedSince.HasValue) {
+            if (ifModifiedSince.HasValue)
+            {
                 // return latest info which might be privisioning.
             }
 

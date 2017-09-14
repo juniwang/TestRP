@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AzNginx.Provision.Core.Storage.Entity;
+using AzNginx.Provision.Core.Entity;
 
 namespace AzNginx.Provision.Core.Handlers
 {
     public class ACRInitHandler : ProvisionHandlerBase
     {
-        public override Task Handle(NginxProvisionEntity entity, CancellationToken cancellationToken)
+        public override async Task Handle(NginxProvisionEntity entity, CancellationToken cancellationToken)
         {
             entity.JobState = NginxProvisionState.ACRStatus;
-            return UpdateJobAndSchedule(entity, cancellationToken);
+            await UpdateJobAndSchedule(entity, cancellationToken);
         }
     }
 }

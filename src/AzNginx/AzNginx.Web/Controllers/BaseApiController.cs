@@ -8,12 +8,14 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using AzNginx.Common;
+using AzNginx.Provision.Core;
 
 namespace AzNginx.Web.Controllers
 {
     public abstract class BaseApiController : ApiController
     {
         protected string ApiVersion { get; set; }
+        protected OperationId OperationId { get; set; }
 
         public string BaseAddress
         {
@@ -37,12 +39,13 @@ namespace AzNginx.Web.Controllers
             {
                 ApiVersion = value.ToLowerInvariant();
             }
+            OperationId = controllerContext.Request.GetOperationId();
 
             HttpResponseMessage responseResult = await base.ExecuteAsync(controllerContext, cancellationToken);
 
             // Add x-ms-request-id header to response
-            responseResult.Headers.Add("x-ms-request-id",
-                controllerContext.Request.GetRequestId());
+            var requestId = controllerContext.Request.GetRequestId();
+            responseResult.Headers.Add("x-ms-request-id", requestId);
 
             // Add Date header to response (note Date should be serialized using RFC 1123 format)
             responseResult.Headers.Date = DateTimeOffset.UtcNow;

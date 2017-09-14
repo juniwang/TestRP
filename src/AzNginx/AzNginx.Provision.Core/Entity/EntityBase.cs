@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using AzNginx.Provision.Core.Storage;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Provision.Core.Storage.Entity
+namespace AzNginx.Provision.Core.Entity
 {
     public abstract class EntityBase : TableEntity
     {
@@ -15,6 +16,9 @@ namespace AzNginx.Provision.Core.Storage.Entity
 
         public int EntityType { get; set; }
         public int RetryCount { get; set; }
+
+        [ConvertableEntityProperty]
+        public OperationId OperationId { get; set; }
 
         private JobQueueEntry _jobQueueEntry;
         public void SetJobQueueEntry(JobQueueEntry jobQueueEntry)

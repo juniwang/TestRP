@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AzNginx.Provision.Core.Storage;
-using AzNginx.Provision.Core.Storage.Entity;
+using AzNginx.Provision.Core.Entity;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace AzNginx.Provision.Core.Handlers

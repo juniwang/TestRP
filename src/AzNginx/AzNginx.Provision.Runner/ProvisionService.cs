@@ -35,12 +35,16 @@ namespace AzNginx.Provision.Runner
         public static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterType<NginxProvisionSettings>().PropertiesAutowired().SingleInstance();
+            // for provision service only. IServiceSettings should be resovled to a different settings in a different service.
+            builder.Register<IServiceSettings>(ctx => ctx.Resolve<NginxProvisionSettings>())
+                .SingleInstance().PropertiesAutowired();
+
             builder.RegisterInstance(new JobManager()).As(typeof(IJobManager));
             builder.RegisterType<JobDispatcher>().SingleInstance();
             builder.RegisterType<NginxJobScheduler>().PropertiesAutowired();
             builder.RegisterType<DeploymentStore>().PropertiesAutowired();
             builder.RegisterType<Provisioner>().PropertiesAutowired();
-            
+
         }
     }
 }

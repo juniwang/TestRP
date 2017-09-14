@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Provision.Core.Storage.Entity
+namespace AzNginx.Provision.Core.Entity
 {
     public class NginxProvisionEntity : EntityBase
     {
@@ -15,6 +15,10 @@ namespace AzNginx.Provision.Core.Storage.Entity
 
         [ConvertableEntityProperty]
         public NginxProvisionState JobState { get; set; }
+
+        public string UserSubscription { get; set; }
+
+        public string ResourceGroup { get; set; }
 
         public string ExceptionLogAsJsonString { get; set; }
         public int ErrorCode { get; set; }

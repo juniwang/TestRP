@@ -27,22 +27,22 @@ namespace AzNginx.Web.Controllers
         [Route]
         public virtual async Task<IHttpActionResult> Put(
             [FromUri]ResourceSpec spec,
-            [FromBody]CreateNginxResourceRequest request)
+            [FromBody]CreateNginxResourceRequest body)
         {
             // validate requests
-            if (request == null || spec == null)
+            if (body == null || spec == null)
             {
                 throw new ArgumentNullException("invalid request");
             }
             spec.Verify();
             ResourceNamePolicy.ValidateResourceName(spec);
-            spec.locationName = request.location;
+            spec.locationName = body.location;
 
             var nginx = await Store.TryGetDeployment(spec);
             if (nginx == null)
             {
                 // create request
-                nginx = await Provisioner.CreateResource(spec, request);
+                nginx = await Provisioner.CreateResource(spec, body, OperationId);
                 // todo enqueue message to deployment
                 // saving to DB
                 Store.Context.NginxResources.Add(nginx);

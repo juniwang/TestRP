@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Provision.Core.Storage.Entity
+namespace AzNginx.Provision.Core.Entity
 {
     /// <summary>
     /// An Attribute to enable us write complex objects into Azure table

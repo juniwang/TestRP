@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Provision.Core.Storage.Entity
+namespace AzNginx.Provision.Core.Entity
 {
     /// <summary>
     /// Don't change the int value of the enum, that may cause unexpected issue since the integer will be stored in azure table

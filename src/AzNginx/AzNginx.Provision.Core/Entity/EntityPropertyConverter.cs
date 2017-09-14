@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Provision.Core.Storage.Entity
+namespace AzNginx.Provision.Core.Entity
 {
     public static class EntityPropertyConverter
     {

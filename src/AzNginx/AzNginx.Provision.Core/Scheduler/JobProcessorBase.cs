@@ -1,6 +1,6 @@
 ﻿using AzNginx.Provision.Core.Handlers;
 using AzNginx.Provision.Core.Storage;
-using AzNginx.Provision.Core.Storage.Entity;
+using AzNginx.Provision.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

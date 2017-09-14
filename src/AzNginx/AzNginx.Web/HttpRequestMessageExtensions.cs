@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AzNginx.Provision.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -57,6 +58,19 @@ namespace AzNginx.Web
         public static string GetObjectId(this HttpRequestMessage request)
         {
             return request.GetHeaderValue("x-ms-client-object-id");
+        }
+
+        public static OperationId GetOperationId(this HttpRequestMessage request)
+        {
+            return new OperationId
+            {
+                ClientObjectId = request.GetObjectId(),
+                ClientPrincipalId = request.GetPrincipalId(),
+                ClientRequestId = request.GetClientRequestId(),
+                ClientTenantId = request.GetTenantId(),
+                CorrelationRequestId = request.GetCsmCorrelationId(),
+                RequestId = request.GetRequestId(),
+            };
         }
 
         public static string GetHeaderValue(this HttpRequestMessage request, string headerName)

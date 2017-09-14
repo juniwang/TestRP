@@ -1,4 +1,4 @@
-﻿using AzNginx.Provision.Core.Storage.Entity;
+﻿using AzNginx.Provision.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
