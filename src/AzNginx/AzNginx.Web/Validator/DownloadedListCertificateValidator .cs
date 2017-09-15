@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AzNginx.Common.Helpers;
+using AzNginx.Common;
 
-namespace AzNginx.Common.Validator
+namespace AzNginx.Web.Validator
 {
     public sealed class DownloadedListCertificateValidator : ICertificateValidator, IDisposable
     {

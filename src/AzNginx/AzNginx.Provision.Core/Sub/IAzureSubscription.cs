@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.WindowsAzure.Management;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,9 @@ using System.Threading.Tasks;
 using AzNginx.Common;
 using AzNginx.Common.Exceptions;
 using AzNginx.Provision.Core.Azure;
+using Microsoft.Rest;
+using Microsoft.WindowsAzure.Management;
+using Microsoft.Azure.Management.Resources;
 
 namespace AzNginx.Provision.Core.Sub
 {
@@ -26,6 +28,13 @@ namespace AzNginx.Provision.Core.Sub
             return new ManagementClient(
                 sub.GetCredentials(AzureResource.ServiceManagement),
                 sub.AzureEnvironment.ManagementEndpointUri);
+        }
+
+        public static ResourceManagementClient CreateResourceManagementClient(this IAzureSubscription sub)
+        {
+            return new ResourceManagementClient(
+                sub.GetCredentials(AzureResource.ARM),
+                sub.AzureEnvironment.ResourceManagerEndpointUri);
         }
     }
 
@@ -65,7 +74,7 @@ namespace AzNginx.Provision.Core.Sub
             try
             {
                 var authenticationResult = AcquireAccessTokenAysnc(resource);
-                return new TokenCloudCredentials(SubscriptionId, authenticationResult.AccessToken);
+                return new TokenCloudCredentials(authenticationResult.AccessToken);
             }
             catch (Exception e)
             {

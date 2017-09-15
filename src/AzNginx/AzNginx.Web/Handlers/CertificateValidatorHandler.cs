@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AzNginx.Common;
+using AzNginx.Web.Validator;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using AzNginx.Common;
-using AzNginx.Common.Validator;
 
 namespace AzNginx.Web.Handlers
 {

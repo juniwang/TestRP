@@ -2,11 +2,11 @@
 using Autofac.Integration.WebApi;
 using AzNginx.Common;
 using AzNginx.Common.Helpers;
-using AzNginx.Common.Validator;
 using AzNginx.Models;
 using AzNginx.Provision.Core.Sub;
 using AzNginx.Provision.Runner;
 using AzNginx.Web.Handlers;
+using AzNginx.Web.Validator;
 using Microsoft.Owin;
 using Owin;
 using System;

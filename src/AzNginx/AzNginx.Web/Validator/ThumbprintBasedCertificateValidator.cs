@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNginx.Common.Validator
+namespace AzNginx.Web.Validator
 {
     public class ThumbprintBasedCertificateValidator : ICertificateValidator
     {

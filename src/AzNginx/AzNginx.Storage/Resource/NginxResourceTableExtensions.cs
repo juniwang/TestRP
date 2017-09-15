@@ -19,6 +19,7 @@ namespace AzNginx.Storage.Resource
         public static NginxResourceEntity TryGetNginxResource(this NginxResourceTable table,
                Expression<Func<NginxResourceEntity, bool>> expr, bool excludeDeleted)
         {
+            // TODO the filter is case-sensitive !!! we must support case-insensive query!!!
             expr = RefreshFilter(expr, excludeDeleted);
             return table.CreateQuery().Where(expr).FirstOrDefault();
         }

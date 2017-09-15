@@ -312,6 +312,10 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Results\HttpStatusResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validator\DownloadedListCertificateValidator .cs" />
+    <Compile Include="Validator\ICertificateRetriever.cs" />
+    <Compile Include="Validator\ICertificateValidator.cs" />
+    <Compile Include="Validator\ThumbprintBasedCertificateValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -43,13 +43,13 @@ namespace AzNginx.Provision.Core
                     && nr.ResourceGroup == resource.resourceGroupName
                     && nr.ResourceName == resource.resourceName),
                 excludeDeleted: true);
+        }
 
-            //return ResourceTable.CreateQuery().Where(nr => (nr.PartitionKey == resource.subscriptionId
-            //        && nr.ResourceGroup == resource.resourceGroupName
-            //        && nr.ResourceName == resource.resourceName)
-            //        && nr.Status != NginxResourceStatus.Deleted
-            //        && nr.Status != NginxResourceStatus.Deleting
-            //        && nr.Status != NginxResourceStatus.DeleteFailed).FirstOrDefault();
+        public bool CheckNameAvailability(string resourceName)
+        {
+            return null == ResourceTable.TryGetNginxResource(
+                nr => (nr.ResourceName == resourceName),
+                excludeDeleted: true);
         }
 
         public virtual IEnumerable<NginxResourceEntity> GetAllNginxResources(ResourceSpec spec, bool excludeDeleted = true)
