@@ -133,14 +133,12 @@
   <ItemGroup>
     <Compile Include="Azure\AzureEnvironment.cs" />
     <Compile Include="Azure\AzureResource.cs" />
-    <Compile Include="DeploymentStore.cs" />
-    <Compile Include="ExceptionDetails.cs" />
+    <Compile Include="NginxResourcesStore.cs" />
     <Compile Include="Handlers\ACRInitHandler.cs" />
     <Compile Include="Handlers\ACRStatusHandler.cs" />
     <Compile Include="Handlers\NginxHandlerBase.cs" />
     <Compile Include="Handlers\INginxHandler.cs" />
     <Compile Include="Handlers\ProvisionHandlerBase.cs" />
-    <Compile Include="OperationId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provisioner.cs" />
     <Compile Include="Scheduler\IJobConsumer.cs" />
@@ -156,21 +154,6 @@
     <Compile Include="ServiceSettings\IServiceSettings.cs" />
     <Compile Include="ServiceSettings\JobDispatchingType.cs" />
     <Compile Include="ServiceSettings\NginxProvisionSettings.cs" />
-    <Compile Include="Storage\AzureQueue.cs" />
-    <Compile Include="Storage\AzureTable.cs" />
-    <Compile Include="Entity\EntityBase.cs" />
-    <Compile Include="Entity\EntityPropertyConverter.cs" />
-    <Compile Include="Entity\ConvertableEntityPropertyAttribute.cs" />
-    <Compile Include="Entity\EntityType.cs" />
-    <Compile Include="Entity\NginxProvisionEntity.cs" />
-    <Compile Include="Entity\NginxProvisionState.cs" />
-    <Compile Include="Entity\RowKey.cs" />
-    <Compile Include="Storage\IJobTable.cs" />
-    <Compile Include="Storage\JobQueue.cs" />
-    <Compile Include="Storage\JobQueueEntry.cs" />
-    <Compile Include="Storage\JobTable.cs" />
-    <Compile Include="Storage\Provision\NginxProvisionJobQueue.cs" />
-    <Compile Include="Storage\Provision\NginxProvisionJobTable.cs" />
     <Compile Include="Sub\IAzureResourceManager.cs" />
     <Compile Include="Sub\IAzureSubscription.cs" />
     <Compile Include="Sub\ISubscriptionPoolFactory.cs" />
@@ -178,6 +161,9 @@
     <Compile Include="Sub\SubscriptionConfigs.cs" />
     <Compile Include="Sub\SubscriptionDetails.cs" />
     <Compile Include="Sub\SubscriptionPool.cs" />
+    <Compile Include="Sub\SubscriptionPool.DefaultPool.cs">
+      <DependentUpon>SubscriptionPool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sub\SubscriptionSelectionParams.cs" />
     <Compile Include="Sub\SubscriptionUsage.cs" />
   </ItemGroup>
@@ -186,10 +172,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AzNginx.DAL\AzNginx.DAL.csproj">
-      <Project>{96E86CE9-639D-4F8C-9082-97D63D0DA918}</Project>
-      <Name>AzNginx.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AzNginx.Models\AzNginx.Models.csproj">
       <Project>{101B26C9-14D3-4D52-84AD-57BCD2E79E41}</Project>
       <Name>AzNginx.Models</Name>
@@ -197,6 +179,10 @@
     <ProjectReference Include="..\AzNginx.Common\AzNginx.Common.csproj">
       <Project>{0A98FA3C-CD31-4988-B821-0D178E472B07}</Project>
       <Name>TestRP.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AzNginx.Storage\AzNginx.Storage.csproj">
+      <Project>{c7048fd4-2403-431d-bb43-1e6f877e802e}</Project>
+      <Name>AzNginx.Storage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

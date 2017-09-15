@@ -14,7 +14,7 @@ namespace AzNginx.Web.Controllers
     [ApiVersion(ApiVersions.April2014Preview, ApiVersions.April2014Alpha, ApiVersions.April2014)]
     public class EnumerateResourcesController : BaseApiController
     {
-        public DeploymentStore Store { get; set; }
+        public NginxResourcesStore Store { get; set; }
         public NginxResponseBuilder ResponseBuilder { get; set; }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace AzNginx.Web.Controllers
                 throw new ArgumentNullException("SubscriptionId is null");
             }
 
-            var nginxResources = await Store.GetAllNginxResources(spec);
+            var nginxResources = Store.GetAllNginxResources(spec);
             return ResponseBuilder.MakeListResponse(nginxResources, ApiVersion);
         }
     }

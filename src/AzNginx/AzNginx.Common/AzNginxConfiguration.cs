@@ -24,7 +24,6 @@ namespace AzNginx.Common
         }
         #endregion
 
-
         #region RP Rest API service
         public static class Rest
         {
@@ -38,39 +37,38 @@ namespace AzNginx.Common
         }
         #endregion
 
-
-        public static string AzNginxDBConnectionString
+        #region Storage
+        public static class Storage
         {
-            get
-            {
-                return ConfigurationManager.AppSettings["AzNginx.DB.ConnectionString"];
-            }
-        }
-
-        #region Provision
-        public static class Provision
-        {
-            public static string StorageConnectionString
+            public static string ConnectionString
             {
                 get
                 {
-                    return ConfigurationManager.AppSettings["AzNginx.Provision.StorageConnectionString"];
+                    return ConfigurationManager.AppSettings["AzNginx.Storage.ConnectionString"];
                 }
             }
 
-            public static string JobQueueName
+            public static string ProvisionJobQueueName
             {
                 get
                 {
-                    return ConfigurationManager.AppSettings["AzNginx.Provision.JobQueueName"];
+                    return ConfigurationManager.AppSettings["AzNginx.Storage.ProvisionJobQueueName"];
                 }
             }
 
-            public static string JobTableName
+            public static string ProvisionJobTableName
             {
                 get
                 {
-                    return ConfigurationManager.AppSettings["AzNginx.Provision.JobTableName"];
+                    return ConfigurationManager.AppSettings["AzNginx.Storage.ProvisionJobTableName"];
+                }
+            }
+
+            public static string ResourceTableName
+            {
+                get
+                {
+                    return ConfigurationManager.AppSettings["AzNginx.Storage.ResourceTableName"];
                 }
             }
 
@@ -78,7 +76,7 @@ namespace AzNginx.Common
             {
                 get
                 {
-                    return int.Parse(ConfigurationManager.AppSettings["AzNginx.Provision.MessageVisibilityTimeoutMS"]);
+                    return int.Parse(ConfigurationManager.AppSettings["AzNginx.Storage.MessageVisibilityTimeoutMS"]);
                 }
             }
 
@@ -86,7 +84,7 @@ namespace AzNginx.Common
             {
                 get
                 {
-                    return int.Parse(ConfigurationManager.AppSettings["AzNginx.Provision.DequeueIntervalMS"]);
+                    return int.Parse(ConfigurationManager.AppSettings["AzNginx.Storage.DequeueIntervalMS"]);
                 }
             }
 
@@ -94,7 +92,7 @@ namespace AzNginx.Common
             {
                 get
                 {
-                    return short.Parse(ConfigurationManager.AppSettings["AzNginx.Provision.JobQueueConcurrency"]);
+                    return short.Parse(ConfigurationManager.AppSettings["AzNginx.Storage.JobQueueConcurrency"]);
                 }
             }
 
@@ -102,7 +100,7 @@ namespace AzNginx.Common
             {
                 get
                 {
-                    return short.Parse(ConfigurationManager.AppSettings["AzNginx.Provision.DequeueBatchSize"]);
+                    return short.Parse(ConfigurationManager.AppSettings["AzNginx.Storage.DequeueBatchSize"]);
                 }
             }
         }

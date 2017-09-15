@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AzNginx.Provision.Core.Storage;
-using AzNginx.Provision.Core.Entity;
+using AzNginx.Storage;
+using AzNginx.Storage.Entities;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace AzNginx.Provision.Core.Handlers
 {
     public abstract class NginxHandlerBase<TEntity> : INginxHandler<TEntity>
-        where TEntity : EntityBase
+        where TEntity : JobEntityBase, new()
     {
         private const int defaultMaxRetry = 5;
 
-        protected JobTable JobTable { get; set; }
+        protected JobTable<TEntity> JobTable { get; set; }
         protected JobQueue JobQueue { get; set; }
 
         public abstract Task Handle(TEntity entity, CancellationToken cancellationToken);
 
-        public void Init(JobTable jobTable, JobQueue jobQueue)
+        public void Init(JobTable<TEntity> jobTable, JobQueue jobQueue)
         {
             this.JobTable = jobTable;
             this.JobQueue = jobQueue;
@@ -89,7 +89,7 @@ namespace AzNginx.Provision.Core.Handlers
 
         protected virtual async Task UpdateJobAndStop(TEntity jobEntity, CancellationToken cancellationToken)
         {
-            await JobTable.ReplaceUpdateJobAsync(jobEntity, cancellationToken);
+            await JobTable.ReplaceUpdateEntityAsync(jobEntity, cancellationToken);
             CloudQueueMessage jobQqueueMessage = jobEntity.GetJobQueueEntry().CloudQueueMessage;
             await JobQueue.DeleteJobAsync(jobQqueueMessage, cancellationToken);
         }
@@ -98,7 +98,7 @@ namespace AzNginx.Provision.Core.Handlers
             CancellationToken cancellationToken,
             int visibilityTimeoutInMS = 10000)
         {
-            await JobTable.ReplaceUpdateJobAsync(jobEntity, cancellationToken);
+            await JobTable.ReplaceUpdateEntityAsync(jobEntity, cancellationToken);
             CloudQueueMessage jobQqueueMessage = jobEntity.GetJobQueueEntry().CloudQueueMessage;
             await JobQueue.UpdateJobVisibilityTimeOutAsync(jobQqueueMessage,
                 new TimeSpan(0, 0, 0, 0, visibilityTimeoutInMS), cancellationToken);

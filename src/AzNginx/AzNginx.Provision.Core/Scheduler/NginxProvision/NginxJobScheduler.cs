@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AzNginx.Provision.Core.Storage.Nginx;
-using AzNginx.Provision.Core.Storage;
+using AzNginx.Storage;
 using AzNginx.Provision.Core.Scheduler;
 using AzNginx.Provision.Core.ServiceSettings;
-using AzNginx.Provision.Core.Entity;
+using AzNginx.Storage.Entities;
 using System.Threading;
+using AzNginx.Storage.Provision;
+using AzNginx.Storage.Entities.Provision;
 
 namespace AzNginx.Provision.Core.NginxProvision
 {
-    public class NginxJobScheduler : IJobScheduler
+    /// <summary>
+    /// A class to schedule job for nginx provision
+    /// </summary>
+    public class NginxJobScheduler : IJobScheduler<NginxProvisionEntity>
     {
         public static readonly int JobVisibilityTimeoutInMS = 6000;
 
@@ -21,7 +25,7 @@ namespace AzNginx.Provision.Core.NginxProvision
         NginxProvisionSettings settings;
         TimeSpan jobVisibilityTimeout;
 
-        public IJobTable JobTable
+        public IJobTable<NginxProvisionEntity> JobTable
         {
             get
             {
@@ -47,13 +51,13 @@ namespace AzNginx.Provision.Core.NginxProvision
             await ScheduleJobInternalAsync(entity, CancellationToken.None);
         }
 
-        private async Task ScheduleJobInternalAsync<T>(T jobEntity, CancellationToken cancellationToken) where T : EntityBase
+        private async Task ScheduleJobInternalAsync(NginxProvisionEntity jobEntity, CancellationToken cancellationToken)
         {
             string jobQueueReference = JobQueueEntry.formatQueryEntry(
                 jobEntity.PartitionKey,
                 jobEntity.RowKey,
                 jobEntity.EntityType);
-            await this.jobTable.AddJobAsync(jobEntity, cancellationToken);
+            await this.jobTable.AddEntityAysnc(jobEntity, cancellationToken);
             await this.jobQueue.AddJobAsync(jobQueueReference, jobVisibilityTimeout, cancellationToken);
         }
     }

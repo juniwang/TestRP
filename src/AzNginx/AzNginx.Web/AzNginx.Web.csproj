@@ -386,10 +386,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AzNginx.DAL\AzNginx.DAL.csproj">
-      <Project>{96E86CE9-639D-4F8C-9082-97D63D0DA918}</Project>
-      <Name>AzNginx.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AzNginx.Models\AzNginx.Models.csproj">
       <Project>{101B26C9-14D3-4D52-84AD-57BCD2E79E41}</Project>
       <Name>AzNginx.Models</Name>
@@ -405,6 +401,10 @@
     <ProjectReference Include="..\AzNginx.Provision.Runner\AzNginx.Provision.Runner.csproj">
       <Project>{FAE9A79B-DB7F-4851-8A10-5F0352A048A2}</Project>
       <Name>AzNginx.Provision.Runner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AzNginx.Storage\AzNginx.Storage.csproj">
+      <Project>{c7048fd4-2403-431d-bb43-1e6f877e802e}</Project>
+      <Name>AzNginx.Storage</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

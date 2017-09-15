@@ -67,9 +67,9 @@
       <Project>{0A98FA3C-CD31-4988-B821-0D178E472B07}</Project>
       <Name>AzNginx.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AzNginx.DAL\AzNginx.DAL.csproj">
-      <Project>{96E86CE9-639D-4F8C-9082-97D63D0DA918}</Project>
-      <Name>AzNginx.DAL</Name>
+    <ProjectReference Include="..\AzNginx.Storage\AzNginx.Storage.csproj">
+      <Project>{C7048FD4-2403-431D-BB43-1E6F877E802E}</Project>
+      <Name>AzNginx.Storage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

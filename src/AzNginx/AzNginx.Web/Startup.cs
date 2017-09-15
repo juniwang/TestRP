@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Autofac;
+using Autofac.Integration.WebApi;
+using AzNginx.Common;
+using AzNginx.Common.Helpers;
+using AzNginx.Common.Validator;
+using AzNginx.Models;
+using AzNginx.Provision.Core.Sub;
+using AzNginx.Provision.Runner;
+using AzNginx.Web.Handlers;
 using Microsoft.Owin;
 using Owin;
-using System.Security.Cryptography.X509Certificates;
-using Autofac;
-using AzNginx.Common.Validator;
-using AzNginx.Common.Helpers;
-using AzNginx.Common;
-using System.Web.Http;
-using Autofac.Integration.WebApi;
+using System;
+using System.Linq;
 using System.Net.Http.Formatting;
-using AzNginx.Web.Handlers;
-using AzNginx.Provision.Core.Sub;
-using AzNginx.Provision.Core;
-using AzNginx.Web.Controllers;
-using System.Web.Mvc;
-using Autofac.Integration.Owin;
-using System.Reflection;
-using System.Web.Http.Dependencies;
-using AzNginx.DAL;
-using AzNginx.Models;
-using AzNginx.Provision.Runner;
+using System.Security.Cryptography.X509Certificates;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(AzNginx.Web.Startup))]
 
@@ -98,7 +90,6 @@ namespace AzNginx.Web
 
         void RegisterDependencies(ContainerBuilder builder)
         {
-            builder.Register(ctx => NginxDbContext.Create()).InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterType<NginxResponseBuilder>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.RegisterInstance(new CertificateRetriever()).As<ICertificateRetriever>();
             builder.RegisterType<AzureResourceManager>().As<IAzureResourceManager>().PropertiesAutowired();

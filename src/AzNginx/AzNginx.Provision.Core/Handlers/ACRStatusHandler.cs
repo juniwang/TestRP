@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AzNginx.Provision.Core.Entity;
+using AzNginx.Storage.Entities;
+using AzNginx.Storage.Entities.Provision;
 
 namespace AzNginx.Provision.Core.Handlers
 {

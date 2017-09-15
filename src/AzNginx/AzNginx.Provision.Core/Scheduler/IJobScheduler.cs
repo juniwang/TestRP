@@ -1,4 +1,5 @@
-﻿using AzNginx.Provision.Core.Storage;
+﻿using AzNginx.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace AzNginx.Provision.Core.Scheduler
 {
-    public interface IJobScheduler
+    public interface IJobScheduler<TEntity> where TEntity : TableEntity, new()
     {
-        IJobTable JobTable { get; }
+        IJobTable<TEntity> JobTable { get; }
     }
 }

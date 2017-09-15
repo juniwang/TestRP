@@ -55,6 +55,10 @@
       <Project>{B79C0429-B458-4AE8-8FE4-C88D4F268922}</Project>
       <Name>AzNginx.Provision.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AzNginx.Storage\AzNginx.Storage.csproj">
+      <Project>{C7048FD4-2403-431D-BB43-1E6F877E802E}</Project>
+      <Name>AzNginx.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

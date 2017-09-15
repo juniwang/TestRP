@@ -1,4 +1,4 @@
-﻿using AzNginx.DAL;
+﻿using AzNginx.Storage.Entities.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace AzNginx.Models
 {
     public class NginxResponseBuilder
     {
-        public NginxResourceResponse MakeResponse(NginxResource resource, string apiVersion)
+        public NginxResourceResponse MakeResponse(NginxResourceEntity resource, string apiVersion)
         {
             // return different response accoring to the apiVersion
             return new NginxResourceResponse
@@ -27,7 +27,7 @@ namespace AzNginx.Models
             };
         }
 
-        public NginxResourceListResponse MakeListResponse(IEnumerable<NginxResource> resources, string apiVersion)
+        public NginxResourceListResponse MakeListResponse(IEnumerable<NginxResourceEntity> resources, string apiVersion)
         {
             return new NginxResourceListResponse
             {

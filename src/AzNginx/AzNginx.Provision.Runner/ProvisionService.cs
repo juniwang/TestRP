@@ -3,6 +3,7 @@ using AzNginx.Provision.Core;
 using AzNginx.Provision.Core.NginxProvision;
 using AzNginx.Provision.Core.Scheduler;
 using AzNginx.Provision.Core.ServiceSettings;
+using AzNginx.Storage.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,16 +35,18 @@ namespace AzNginx.Provision.Runner
 
         public static void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterType<NginxProvisionSettings>().PropertiesAutowired().SingleInstance();
             // for provision service only. IServiceSettings should be resovled to a different settings in a different service.
+            builder.RegisterType<NginxProvisionSettings>().PropertiesAutowired().SingleInstance();
             builder.Register<IServiceSettings>(ctx => ctx.Resolve<NginxProvisionSettings>())
                 .SingleInstance().PropertiesAutowired();
-
             builder.RegisterInstance(new JobManager()).As(typeof(IJobManager));
             builder.RegisterType<JobDispatcher>().SingleInstance();
-            builder.RegisterType<NginxJobScheduler>().PropertiesAutowired();
-            builder.RegisterType<DeploymentStore>().PropertiesAutowired();
+
+            // for both provision service and the restAPIs
             builder.RegisterType<Provisioner>().PropertiesAutowired();
+            builder.RegisterType<NginxResourcesStore>().PropertiesAutowired();
+            builder.RegisterType<NginxResourceTable>().PropertiesAutowired();
+            builder.RegisterType<NginxJobScheduler>().PropertiesAutowired();
 
         }
     }

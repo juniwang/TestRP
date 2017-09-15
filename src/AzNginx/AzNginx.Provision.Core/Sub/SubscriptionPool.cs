@@ -9,7 +9,7 @@ using AzNginx.Common;
 
 namespace AzNginx.Provision.Core.Sub
 {
-    public sealed class SubscriptionPool
+    public sealed partial class SubscriptionPool
         : ResourcePool<IAzureSubscription, SubscriptionDetails, SubscriptionUsage, SubscriptionSelectionParams>
     {
         public IAzureResourceManager AzureResourceMgr { get; set; }

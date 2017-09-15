@@ -21,13 +21,13 @@ namespace AzNginx.Provision.Core.ServiceSettings
 
         public NginxProvisionSettings()
         {
-            ProvisionStorageAccount = CloudStorageAccount.Parse(AzNginxConfiguration.Provision.StorageConnectionString);
-            jobQueueMessageVisibilityTimeoutMS = AzNginxConfiguration.Provision.MessageVisibilityTimeoutMS;
-            jobQueueDequeueIntervalMS = AzNginxConfiguration.Provision.DequeueIntervalMS;
-            jobQueueConcurrency = AzNginxConfiguration.Provision.JobQueueConcurrency;
-            jobQueueBatchSize = AzNginxConfiguration.Provision.DequeueBatchSize;
-            JobQueueName = AzNginxConfiguration.Provision.JobQueueName;
-            JobTableName = AzNginxConfiguration.Provision.JobTableName;
+            ProvisionStorageAccount = CloudStorageAccount.Parse(AzNginxConfiguration.Storage.ConnectionString);
+            jobQueueMessageVisibilityTimeoutMS = AzNginxConfiguration.Storage.MessageVisibilityTimeoutMS;
+            jobQueueDequeueIntervalMS = AzNginxConfiguration.Storage.DequeueIntervalMS;
+            jobQueueConcurrency = AzNginxConfiguration.Storage.JobQueueConcurrency;
+            jobQueueBatchSize = AzNginxConfiguration.Storage.DequeueBatchSize;
+            JobQueueName = AzNginxConfiguration.Storage.ProvisionJobQueueName;
+            JobTableName = AzNginxConfiguration.Storage.ProvisionJobTableName;
         }
 
         /// <summary>

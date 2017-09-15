@@ -1,4 +1,5 @@
-﻿using AzNginx.Provision.Core.ServiceSettings;
+﻿using AzNginx.Common;
+using AzNginx.Provision.Core.ServiceSettings;
 using Microsoft.WindowsAzure.Storage.Queue;
 using System;
 using System.Collections.Generic;

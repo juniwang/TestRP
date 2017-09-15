@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.Storage.Queue;
+﻿using AzNginx.Common;
+using Microsoft.WindowsAzure.Storage.Queue;
 using System;
 using System.Collections.Generic;
 using System.Linq;

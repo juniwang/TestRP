@@ -10,6 +10,8 @@ using AzNginx.Common.Exceptions;
 using AzNginx.Common.Helpers;
 using AzNginx.Provision.Core;
 using AzNginx.Web.Filters;
+using AzNginx.Storage.Resource;
+using System.Threading;
 
 namespace AzNginx.Web.Controllers
 {
@@ -17,9 +19,11 @@ namespace AzNginx.Web.Controllers
     [RoutePrefix("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProvider}/{resourceType}/{resourceName?}")]
     public class NginxResourceController : BaseApiController
     {
-        public DeploymentStore Store { get; set; }
+        public NginxResourcesStore Store { get; set; }
 
         public Provisioner Provisioner { get; set; }
+
+        public NginxResourceTable ResourceTable { get; set; }
 
         public NginxResponseBuilder ResponseBuilder { get; set; }
 
@@ -38,15 +42,14 @@ namespace AzNginx.Web.Controllers
             ResourceNamePolicy.ValidateResourceName(spec);
             spec.locationName = body.location;
 
-            var nginx = await Store.TryGetDeployment(spec);
+            var nginx = Store.TryGetNginxResource(spec);
             if (nginx == null)
             {
                 // create request
                 nginx = await Provisioner.CreateResource(spec, body, OperationId);
                 // todo enqueue message to deployment
                 // saving to DB
-                Store.Context.NginxResources.Add(nginx);
-                Store.Context.SaveChanges();
+                await ResourceTable.AddEntityAysnc(nginx, CancellationToken.None);
                 return Ok(ResponseBuilder.MakeResponse(nginx, ApiVersion));
             }
             else
@@ -70,7 +73,7 @@ namespace AzNginx.Web.Controllers
             if (string.IsNullOrEmpty(spec.resourceName))
             {
                 // Handles requests to list all resources in a resource group.
-                var nginxResources = await Store.GetAllNginxResources(spec);
+                var nginxResources = Store.GetAllNginxResources(spec);
                 return Ok(ResponseBuilder.MakeListResponse(nginxResources, ApiVersion));
             }
             else
@@ -101,7 +104,7 @@ namespace AzNginx.Web.Controllers
             {
                 var nginx = await Provisioner.GetResource(spec);
                 // todo should remove acr too
-                Store.Context.NginxResources.Remove(nginx);
+                await ResourceTable.DeleteEntityAsync(nginx, CancellationToken.None);
             }
             catch (NginxResourceDoesntExistException)
             {

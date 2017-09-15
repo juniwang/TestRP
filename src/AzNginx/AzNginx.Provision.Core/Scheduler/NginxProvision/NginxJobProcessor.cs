@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Queue;
-using AzNginx.Provision.Core.Storage.Nginx;
 using AzNginx.Provision.Core.ServiceSettings;
-using AzNginx.Provision.Core.Storage;
-using AzNginx.Provision.Core.Entity;
+using AzNginx.Storage;
+using AzNginx.Storage.Entities;
 using AzNginx.Provision.Core.Handlers;
 using System.Threading;
+using AzNginx.Storage.Provision;
+using AzNginx.Common;
+using AzNginx.Storage.Entities.Provision;
 
 namespace AzNginx.Provision.Core.Scheduler.NginxProvision
 {
-    public class NginxJobProcessor : JobProcessorBase, IJobProcessor
+    public class NginxJobProcessor : JobProcessorBase<NginxProvisionEntity>, IJobProcessor
     {
         /// <summary>
         /// The job visibility timeout for write in milliseconds.
